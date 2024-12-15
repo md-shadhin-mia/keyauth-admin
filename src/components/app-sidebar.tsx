@@ -14,8 +14,7 @@ import {
   SquareTerminal,
 } from "lucide-react"
 
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
+import { MenuItem, NavMain } from "@/components/nav-main"
 import { NavUser } from "@/components/nav-user"
 import { TeamSwitcher } from "@/components/team-switcher"
 import {
@@ -197,6 +196,19 @@ const data = {
     },
   ],
 }
+
+export type MenuGroupType={
+  name?: string
+  items: MenuItem[]
+}
+
+const routes: MenuGroupType[] = [
+  {
+    name: "Main",
+    items: data.navMain,
+  }
+]
+
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -205,8 +217,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <ScrollArea>
-          <NavMain items={data.navMain} />
-          <NavProjects projects={data.projects} />
+          {routes.map((route) => (
+            <NavMain key={route.name} items={route.items} name={route.name} />
+          ))}
+          {/* <NavMain items={data.navMain} /> */}
+          {/* <NavProjects projects={data.projects} /> */}
         </ScrollArea>
       </SidebarContent>
       <SidebarFooter>

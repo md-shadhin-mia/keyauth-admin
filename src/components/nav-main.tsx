@@ -17,15 +17,15 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
-type Item = {
+export type MenuItem = {
   title: string
   url: string
   icon?: LucideIcon
   isActive?: boolean
-  items?: Item[]
+  items?: MenuItem[]
 }
 
-export function SubmenuItem({ item }: { item: Item }) {
+export function SubmenuItem({ item }: { item: MenuItem }) {
   return item.items ? (
     <Collapsible
       key={item.title}
@@ -61,12 +61,15 @@ export function SubmenuItem({ item }: { item: Item }) {
 
 export function NavMain({
   items,
+  name
 }: {
-  items: Item[]
+  items: MenuItem[],
+  name?: string
 }) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      {name && <SidebarGroupLabel>{name}</SidebarGroupLabel>}
+      {/* <SidebarGroupLabel>Platform</SidebarGroupLabel> */}
       <SidebarMenu>
         {items.map((item) => (
           <SubmenuItem key={item.title} item={item} />
